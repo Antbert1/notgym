@@ -1,4 +1,5 @@
-from notgym.serializers import ClassdetailSerializer, CategorySerializer
+from notgym.serializers import ClassdetailSerializer, CategorySerializer, UserSerializer
+from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Classdetail, Category
@@ -6,12 +7,17 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
+class UserViewset(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
 class ClassdetailViewset(viewsets.ModelViewSet):
     serializer_class = ClassdetailSerializer
     queryset = Classdetail.objects.all()
 
     # Token stuff, may not need
-    # authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):

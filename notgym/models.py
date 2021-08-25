@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import User
 
 
@@ -13,7 +15,7 @@ class Category(models.Model):
 
 class Classdetail(models.Model):
     name = models.CharField(max_length=60)
-    categories = models.ManyToManyField(Category, related_name="categories")
+    categories = models.ManyToManyField(Category, related_name="classdetails")
     type = models.CharField(max_length=60, default="")
     tags = models.TextField(default="")
     blurb = models.TextField(default="")
