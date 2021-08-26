@@ -49,7 +49,7 @@ class UserSerializer(serializers.ModelSerializer):
         #     password=validated_data["password"],
         # )
         user = UserProfile.objects.create_user(**validated_data)
-        # Token.objects.create(user=user)
+        Token.objects.create(user=user)
         return user
 
 

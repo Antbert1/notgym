@@ -91,7 +91,7 @@ WSGI_APPLICATION = "notgymapi.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "notgymapi_db",
+        "NAME": "notgymapi",
         "USER": os.environ["DB_USERNAME"],
         "PASSWORD": os.environ["PASSWORD"],
         "HOST": "localhost",
