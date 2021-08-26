@@ -8,5 +8,6 @@ router.register("classdetails", views.ClassdetailViewset)
 router.register("categories", views.CategoryViewset)
 
 urlpatterns = [
+    path("login/", views.UserLoginApiView.as_view()),
     path("", include(router.urls)),
 ]
