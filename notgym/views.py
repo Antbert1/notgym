@@ -15,7 +15,18 @@ class UserViewset(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     # permission_classes = (permissions.UpdateOwnProfile,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ("name", "email")
+    search_fields = ("email",)
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = UserProfile.objects.all()
+        email = self.request.query_params.get("email")
+        if email is not None:
+            queryset = queryset.filter(email=email)
+        return queryset
 
 
 class UserLoginApiView(ObtainAuthToken):

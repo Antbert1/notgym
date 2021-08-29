@@ -11,7 +11,7 @@ from django.conf import settings
 
 class UserProfileManager(BaseUserManager):
     def create_user(
-        self, email, name, is_teacher, first_name, last_name, postcode, password=None
+        self, email, is_teacher, first_name, last_name, postcode, password=None
     ):
         if not email:
             raise ValueError("Users must have an email address")
@@ -19,7 +19,6 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(
             email=email,
-            name=name,
             is_teacher=is_teacher,
             first_name=first_name,
             last_name=last_name,
@@ -32,8 +31,8 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, name, password):
-        user = self.create_user(email, name, False, "", "", "", password)
+    def create_superuser(self, email, password):
+        user = self.create_user(email, False, "", "", "", password)
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
@@ -43,7 +42,6 @@ class UserProfileManager(BaseUserManager):
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     # Database model for users in the system
     email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
@@ -58,10 +56,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         # Retrieve full name of user
-        return self.name
+        return self.first_name + " " + self.last_name
 
     def get_short_name(self):
-        return self.name
+        return self.first_name + " " + self.last_name
 
     def __str__(self):
         return self.email
