@@ -9,5 +9,6 @@ router.register("categories", views.CategoryViewset)
 
 urlpatterns = [
     path("login/", views.UserLoginApiView.as_view()),
+    path("authenticate/", views.CustomObtainAuthToken.as_view()),
     path("", include(router.urls)),
 ]
